@@ -1,0 +1,90 @@
+# Task 2: Maximum
+# Your goal for this task is to find the maximum of 3 variables
+# Three variables W, X and Y are stored in the main memory
+# The location of W is SP-3
+# The location of X is SP-2
+# The location of Y is SP-1
+# The location of Z is SP
+# You must set the value of Z to MAX(W, X, Y)
+
+# The value of the SP register will be initialized to some number,
+# which denotes the location of Z (W is at SP-3, X is at SP-2,
+# Y is at SP-1).
+
+# You may NOT initialize any other registers (though you can use
+# any registers you need in your code)
+
+2: 1027; # Initialize the SP register to 1027 (location of Z)
+# ALL other non-constant registers will be initialized to 0
+# regardless of any initializers you use.
+
+[1024]: -1; # Initialize the value of W to -1
+[1025]: 8; # Initialize the value of X to 8
+[1026]: 10; # Initialize the value of Y to 5
+
+# Alternative initialization:
+# 2: 3; # Initialize the SP register to 3 (location of Z)
+#
+# [0]: -1; # Initialize the value of W to -1
+# [1]: 8; # Initialize the value of X to 8
+# [2]: 10; # Initialize the value of Y to 5
+
+# Goal:
+#
+#   Z = MAX(W,X,Y)
+#
+
+# Start your code here
+MV C, 2;
+ADD C, 7;
+
+MV B, C;
+ADD B, 7;
+
+MV A, B;
+ADD A, 7;
+
+SA A;
+RD;
+RB A;
+
+SA B; 
+RD;
+RB B;
+
+SA C;
+RD;
+RB C;
+
+NOT D, B;
+ADD D, 6;
+ADD D, A;
+
+SF D;
+BIN IF_NEG1;
+
+MV D, A;
+GO SECOND;
+
+LBL IF_NEG1;
+MV D, B;
+
+LBL SECOND;
+
+NOT E, C;
+ADD E, 6;
+ADD E, D;
+
+SF E;
+BIN IF_NEG2;
+
+MV E, D;
+GO END;
+
+LBL IF_NEG2;
+MV E, C;
+
+LBL END;
+
+SW 2, E;
+
